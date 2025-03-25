@@ -1,0 +1,4 @@
+/Users/dquintero/Desktop/indicator/build/CMakeFiles/rebuild_cache.dir
+/Users/dquintero/Desktop/indicator/build/CMakeFiles/edit_cache.dir
+/Users/dquintero/Desktop/indicator/build/CMakeFiles/AltitudeIndicator.dir
+/Users/dquintero/Desktop/indicator/build/CMakeFiles/glad.dir

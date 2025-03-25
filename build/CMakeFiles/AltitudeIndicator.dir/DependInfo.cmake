@@ -5,11 +5,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/dquintero/Desktop/indicator/src/main.cpp" "/Users/dquintero/Desktop/indicator/build/CMakeFiles/AltitudeIndicator.dir/src/main.cpp.o"
-  "/Users/dquintero/Desktop/indicator/src/renderer/renderer.cpp" "/Users/dquintero/Desktop/indicator/build/CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.o"
   "/Users/dquintero/Desktop/indicator/src/renderer/shader.cpp" "/Users/dquintero/Desktop/indicator/build/CMakeFiles/AltitudeIndicator.dir/src/renderer/shader.cpp.o"
+  "/Users/dquintero/Desktop/indicator/src/renderer/sprite_renderer.cpp" "/Users/dquintero/Desktop/indicator/build/CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.o"
   "/Users/dquintero/Desktop/indicator/src/renderer/texture.cpp" "/Users/dquintero/Desktop/indicator/build/CMakeFiles/AltitudeIndicator.dir/src/renderer/texture.cpp.o"
-  "/Users/dquintero/Desktop/indicator/src/resources/mesh_loader.cpp" "/Users/dquintero/Desktop/indicator/build/CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.o"
-  "/Users/dquintero/Desktop/indicator/src/resources/resources.cpp" "/Users/dquintero/Desktop/indicator/build/CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.o"
   "/Users/dquintero/Desktop/indicator/src/system/window.cpp" "/Users/dquintero/Desktop/indicator/build/CMakeFiles/AltitudeIndicator.dir/src/system/window.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")

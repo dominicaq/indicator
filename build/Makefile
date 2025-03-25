@@ -209,33 +209,6 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/renderer/renderer.o: src/renderer/renderer.cpp.o
-
-.PHONY : src/renderer/renderer.o
-
-# target to build an object file
-src/renderer/renderer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.o
-.PHONY : src/renderer/renderer.cpp.o
-
-src/renderer/renderer.i: src/renderer/renderer.cpp.i
-
-.PHONY : src/renderer/renderer.i
-
-# target to preprocess a source file
-src/renderer/renderer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.i
-.PHONY : src/renderer/renderer.cpp.i
-
-src/renderer/renderer.s: src/renderer/renderer.cpp.s
-
-.PHONY : src/renderer/renderer.s
-
-# target to generate assembly for a file
-src/renderer/renderer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.s
-.PHONY : src/renderer/renderer.cpp.s
-
 src/renderer/shader.o: src/renderer/shader.cpp.o
 
 .PHONY : src/renderer/shader.o
@@ -263,6 +236,33 @@ src/renderer/shader.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/renderer/shader.cpp.s
 .PHONY : src/renderer/shader.cpp.s
 
+src/renderer/sprite_renderer.o: src/renderer/sprite_renderer.cpp.o
+
+.PHONY : src/renderer/sprite_renderer.o
+
+# target to build an object file
+src/renderer/sprite_renderer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.o
+.PHONY : src/renderer/sprite_renderer.cpp.o
+
+src/renderer/sprite_renderer.i: src/renderer/sprite_renderer.cpp.i
+
+.PHONY : src/renderer/sprite_renderer.i
+
+# target to preprocess a source file
+src/renderer/sprite_renderer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.i
+.PHONY : src/renderer/sprite_renderer.cpp.i
+
+src/renderer/sprite_renderer.s: src/renderer/sprite_renderer.cpp.s
+
+.PHONY : src/renderer/sprite_renderer.s
+
+# target to generate assembly for a file
+src/renderer/sprite_renderer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.s
+.PHONY : src/renderer/sprite_renderer.cpp.s
+
 src/renderer/texture.o: src/renderer/texture.cpp.o
 
 .PHONY : src/renderer/texture.o
@@ -289,60 +289,6 @@ src/renderer/texture.s: src/renderer/texture.cpp.s
 src/renderer/texture.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/renderer/texture.cpp.s
 .PHONY : src/renderer/texture.cpp.s
-
-src/resources/mesh_loader.o: src/resources/mesh_loader.cpp.o
-
-.PHONY : src/resources/mesh_loader.o
-
-# target to build an object file
-src/resources/mesh_loader.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.o
-.PHONY : src/resources/mesh_loader.cpp.o
-
-src/resources/mesh_loader.i: src/resources/mesh_loader.cpp.i
-
-.PHONY : src/resources/mesh_loader.i
-
-# target to preprocess a source file
-src/resources/mesh_loader.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.i
-.PHONY : src/resources/mesh_loader.cpp.i
-
-src/resources/mesh_loader.s: src/resources/mesh_loader.cpp.s
-
-.PHONY : src/resources/mesh_loader.s
-
-# target to generate assembly for a file
-src/resources/mesh_loader.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.s
-.PHONY : src/resources/mesh_loader.cpp.s
-
-src/resources/resources.o: src/resources/resources.cpp.o
-
-.PHONY : src/resources/resources.o
-
-# target to build an object file
-src/resources/resources.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.o
-.PHONY : src/resources/resources.cpp.o
-
-src/resources/resources.i: src/resources/resources.cpp.i
-
-.PHONY : src/resources/resources.i
-
-# target to preprocess a source file
-src/resources/resources.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.i
-.PHONY : src/resources/resources.cpp.i
-
-src/resources/resources.s: src/resources/resources.cpp.s
-
-.PHONY : src/resources/resources.s
-
-# target to generate assembly for a file
-src/resources/resources.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/AltitudeIndicator.dir/build.make CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.s
-.PHONY : src/resources/resources.cpp.s
 
 src/system/window.o: src/system/window.cpp.o
 
@@ -387,21 +333,15 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/renderer/renderer.o"
-	@echo "... src/renderer/renderer.i"
-	@echo "... src/renderer/renderer.s"
 	@echo "... src/renderer/shader.o"
 	@echo "... src/renderer/shader.i"
 	@echo "... src/renderer/shader.s"
+	@echo "... src/renderer/sprite_renderer.o"
+	@echo "... src/renderer/sprite_renderer.i"
+	@echo "... src/renderer/sprite_renderer.s"
 	@echo "... src/renderer/texture.o"
 	@echo "... src/renderer/texture.i"
 	@echo "... src/renderer/texture.s"
-	@echo "... src/resources/mesh_loader.o"
-	@echo "... src/resources/mesh_loader.i"
-	@echo "... src/resources/mesh_loader.s"
-	@echo "... src/resources/resources.o"
-	@echo "... src/resources/resources.i"
-	@echo "... src/resources/resources.s"
 	@echo "... src/system/window.o"
 	@echo "... src/system/window.i"
 	@echo "... src/system/window.s"

@@ -7,7 +7,6 @@
 
 class Window {
 public:
-    // Constructor and Destructor
     Window(const char *title, unsigned int width, unsigned int height);
     ~Window();
 

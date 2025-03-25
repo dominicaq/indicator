@@ -1,5 +1,4 @@
-#ifndef SHADER_H
-#define SHADER_H
+#pragma once
 
 #include <glad/glad.h>
 #include <glm.hpp>
@@ -27,5 +26,3 @@ private:
     void linkProgram(unsigned int vertexShader, unsigned int fragmentShader, int *status);
     int loadShaderSource(const std::string& path, std::string& sourceCode);
 };
-
-#endif

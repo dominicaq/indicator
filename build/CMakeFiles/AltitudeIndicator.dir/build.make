@@ -89,22 +89,9 @@ CMakeFiles/AltitudeIndicator.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AltitudeIndicator.dir/src/main.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/dquintero/Desktop/indicator/src/main.cpp -o CMakeFiles/AltitudeIndicator.dir/src/main.cpp.s
 
-CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.o: CMakeFiles/AltitudeIndicator.dir/flags.make
-CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.o: ../src/renderer/renderer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dquintero/Desktop/indicator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.o -c /Users/dquintero/Desktop/indicator/src/renderer/renderer.cpp
-
-CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/dquintero/Desktop/indicator/src/renderer/renderer.cpp > CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.i
-
-CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/dquintero/Desktop/indicator/src/renderer/renderer.cpp -o CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.s
-
 CMakeFiles/AltitudeIndicator.dir/src/renderer/shader.cpp.o: CMakeFiles/AltitudeIndicator.dir/flags.make
 CMakeFiles/AltitudeIndicator.dir/src/renderer/shader.cpp.o: ../src/renderer/shader.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dquintero/Desktop/indicator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/AltitudeIndicator.dir/src/renderer/shader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dquintero/Desktop/indicator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/AltitudeIndicator.dir/src/renderer/shader.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/AltitudeIndicator.dir/src/renderer/shader.cpp.o -c /Users/dquintero/Desktop/indicator/src/renderer/shader.cpp
 
 CMakeFiles/AltitudeIndicator.dir/src/renderer/shader.cpp.i: cmake_force
@@ -114,6 +101,19 @@ CMakeFiles/AltitudeIndicator.dir/src/renderer/shader.cpp.i: cmake_force
 CMakeFiles/AltitudeIndicator.dir/src/renderer/shader.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AltitudeIndicator.dir/src/renderer/shader.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/dquintero/Desktop/indicator/src/renderer/shader.cpp -o CMakeFiles/AltitudeIndicator.dir/src/renderer/shader.cpp.s
+
+CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.o: CMakeFiles/AltitudeIndicator.dir/flags.make
+CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.o: ../src/renderer/sprite_renderer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dquintero/Desktop/indicator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.o -c /Users/dquintero/Desktop/indicator/src/renderer/sprite_renderer.cpp
+
+CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/dquintero/Desktop/indicator/src/renderer/sprite_renderer.cpp > CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.i
+
+CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/dquintero/Desktop/indicator/src/renderer/sprite_renderer.cpp -o CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.s
 
 CMakeFiles/AltitudeIndicator.dir/src/renderer/texture.cpp.o: CMakeFiles/AltitudeIndicator.dir/flags.make
 CMakeFiles/AltitudeIndicator.dir/src/renderer/texture.cpp.o: ../src/renderer/texture.cpp
@@ -128,35 +128,9 @@ CMakeFiles/AltitudeIndicator.dir/src/renderer/texture.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AltitudeIndicator.dir/src/renderer/texture.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/dquintero/Desktop/indicator/src/renderer/texture.cpp -o CMakeFiles/AltitudeIndicator.dir/src/renderer/texture.cpp.s
 
-CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.o: CMakeFiles/AltitudeIndicator.dir/flags.make
-CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.o: ../src/resources/mesh_loader.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dquintero/Desktop/indicator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.o -c /Users/dquintero/Desktop/indicator/src/resources/mesh_loader.cpp
-
-CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/dquintero/Desktop/indicator/src/resources/mesh_loader.cpp > CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.i
-
-CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/dquintero/Desktop/indicator/src/resources/mesh_loader.cpp -o CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.s
-
-CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.o: CMakeFiles/AltitudeIndicator.dir/flags.make
-CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.o: ../src/resources/resources.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dquintero/Desktop/indicator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.o -c /Users/dquintero/Desktop/indicator/src/resources/resources.cpp
-
-CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/dquintero/Desktop/indicator/src/resources/resources.cpp > CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.i
-
-CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/dquintero/Desktop/indicator/src/resources/resources.cpp -o CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.s
-
 CMakeFiles/AltitudeIndicator.dir/src/system/window.cpp.o: CMakeFiles/AltitudeIndicator.dir/flags.make
 CMakeFiles/AltitudeIndicator.dir/src/system/window.cpp.o: ../src/system/window.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dquintero/Desktop/indicator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/AltitudeIndicator.dir/src/system/window.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/dquintero/Desktop/indicator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/AltitudeIndicator.dir/src/system/window.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/AltitudeIndicator.dir/src/system/window.cpp.o -c /Users/dquintero/Desktop/indicator/src/system/window.cpp
 
 CMakeFiles/AltitudeIndicator.dir/src/system/window.cpp.i: cmake_force
@@ -170,29 +144,25 @@ CMakeFiles/AltitudeIndicator.dir/src/system/window.cpp.s: cmake_force
 # Object files for target AltitudeIndicator
 AltitudeIndicator_OBJECTS = \
 "CMakeFiles/AltitudeIndicator.dir/src/main.cpp.o" \
-"CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.o" \
 "CMakeFiles/AltitudeIndicator.dir/src/renderer/shader.cpp.o" \
+"CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.o" \
 "CMakeFiles/AltitudeIndicator.dir/src/renderer/texture.cpp.o" \
-"CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.o" \
-"CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.o" \
 "CMakeFiles/AltitudeIndicator.dir/src/system/window.cpp.o"
 
 # External object files for target AltitudeIndicator
 AltitudeIndicator_EXTERNAL_OBJECTS =
 
 AltitudeIndicator: CMakeFiles/AltitudeIndicator.dir/src/main.cpp.o
-AltitudeIndicator: CMakeFiles/AltitudeIndicator.dir/src/renderer/renderer.cpp.o
 AltitudeIndicator: CMakeFiles/AltitudeIndicator.dir/src/renderer/shader.cpp.o
+AltitudeIndicator: CMakeFiles/AltitudeIndicator.dir/src/renderer/sprite_renderer.cpp.o
 AltitudeIndicator: CMakeFiles/AltitudeIndicator.dir/src/renderer/texture.cpp.o
-AltitudeIndicator: CMakeFiles/AltitudeIndicator.dir/src/resources/mesh_loader.cpp.o
-AltitudeIndicator: CMakeFiles/AltitudeIndicator.dir/src/resources/resources.cpp.o
 AltitudeIndicator: CMakeFiles/AltitudeIndicator.dir/src/system/window.cpp.o
 AltitudeIndicator: CMakeFiles/AltitudeIndicator.dir/build.make
 AltitudeIndicator: libglad.a
 AltitudeIndicator: ../external/glfw-3.4/bin/libglfw.3.dylib
 AltitudeIndicator: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd
 AltitudeIndicator: CMakeFiles/AltitudeIndicator.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/dquintero/Desktop/indicator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable AltitudeIndicator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/dquintero/Desktop/indicator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable AltitudeIndicator"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/AltitudeIndicator.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

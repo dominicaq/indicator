@@ -1,65 +1,78 @@
 #include "system/window.h"
 #include "renderer/shader.h"
-#include "renderer/renderer.h"
-#include "resources/mesh.h"
-#include "resources/mesh_loader.h"
+#include "renderer/sprite_renderer.h"
+#include "renderer/texture.h"
+#include "renderer/sprite.h"
 
 #include <string>
+#include <glm/gtc/matrix_transform.hpp>  // For ortho projection
 
 /*
 * Asset paths
 */
-static const std::string SHADER_DIR = ASSET_DIR "shaders/";
-static const std::string MODEL_DIR = ASSET_DIR "models/";
 static const std::string TEXTURE_DIR = ASSET_DIR "textures/";
 
 int main() {
+    // Initialize window
     Window window("Altitude Indicator", 800, 600);
     if (!window.init()) {
         return -1;
     }
 
-    // Enable depth test
+    // Enable depth test (not needed for 2D rendering, but might be useful for future)
     glEnable(GL_DEPTH_TEST);
 
     // Set up the viewport after window initialization
     glViewport(0, 0, 800, 600);
 
-    // Hard coded asset directories for now
-    std::string vertexPath = SHADER_DIR + "default_vertex.glsl";
-    std::string fragPath = SHADER_DIR + "default_fragment.glsl";
-    Shader shader(vertexPath, fragPath);
+    // Vertex and fragment shaders
+    // TODO: Compile and embed the shader code
+    const char* vertexShaderSource = R"(
+    #version 330 core
+    layout (location = 0) in vec2 aPos;
+    layout (location = 1) in vec2 aTexCoord;
 
-    std::string cubePath = MODEL_DIR + "cube.obj";
-    Mesh* mesh = MeshLoader::loadMesh(cubePath, MeshLoader::FileType::OBJ);
-    if (mesh == nullptr) {
-        std::cerr << "ERROR::MESHLOADER::LOADMESH::NULLPTR\n";
-        return -1;
+    out vec2 TexCoord;
+
+    uniform mat4 model;
+    uniform mat4 projection;
+
+    void main()
+    {
+        gl_Position = projection * model * vec4(aPos, 0.0, 1.0);
+        TexCoord = aTexCoord;
     }
+    )";
 
-    // Create the renderer
-    Renderer renderer;
-    renderer.init();
+    const char* fragmentShaderSource = R"(
+    #version 330 core
+    out vec4 FragColor;
 
-    // Create transformation matrices
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::scale(model, glm::vec3(0.5f));  // Scale down the cube
+    in vec2 TexCoord;
 
-    glm::mat4 view = glm::lookAt(
-        glm::vec3(0.0f, 0.0f, 5.0f),  // Move camera farther back
-        glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec3(0.0f, 1.0f, 0.0f)
-    );
-    glm::mat4 projection = glm::perspective(
-        glm::radians(45.0f),
-        800.0f / 600.0f,
-        0.1f,
-        100.0f
-    );
+    uniform sampler2D spriteTexture;
 
-    glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
-    glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
-    glm::vec3 objectColor(1.0f, 0.5f, 0.31f);
+    void main()
+    {
+        FragColor = texture(spriteTexture, TexCoord);
+    }
+    )";
+
+    // Create the sprite shader using the embedded source code
+    Shader spriteShader(vertexShaderSource, fragmentShaderSource);
+
+    // Load texture for sprite
+    std::string texturePath = TEXTURE_DIR + "sprite.png";
+    Texture spriteTexture(texturePath);
+
+    // Create SpriteRenderer
+    SpriteRenderer spriteRenderer(spriteShader);
+
+    // Create sprite and set properties
+    Sprite sprite;
+
+    // Set up the orthographic projection (2D)
+    glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
 
     // Variables for delta time calculation
     float deltaTime = 0.0f;  // Time between current frame and last frame
@@ -75,20 +88,14 @@ int main() {
         window.processInput();
 
         // Clear screen and depth buffer
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);
 
-        // Update model matrix for rotation (scaled by delta time)
-        model = glm::rotate(model, deltaTime * glm::radians(50.0f), glm::vec3(1.0f, 1.0f, 0.0f));
+        // Use sprite shader and set uniform for projection matrix
+        spriteShader.use();
+        spriteShader.setMat4("projection", projection);
 
-        // Calculate MVP matrix
-        glm::mat4 mvp = projection * view * model;
-
-        // Use shader and set uniforms
-        shader.use();
-        shader.setMat4("u_MVP", mvp);
-
-        // Render mesh
-        renderer.render(mesh, shader);
+        // Render the sprite(s)
+        spriteRenderer.Render();
 
         window.swapBuffersAndPollEvents();
     }

@@ -1,4 +1,4 @@
-/Users/dquintero/Desktop/indicator/build/CMakeFiles/rebuild_cache.dir
-/Users/dquintero/Desktop/indicator/build/CMakeFiles/edit_cache.dir
-/Users/dquintero/Desktop/indicator/build/CMakeFiles/AltitudeIndicator.dir
-/Users/dquintero/Desktop/indicator/build/CMakeFiles/glad.dir
+C:/Users/domin/Desktop/indicator/build/CMakeFiles/glad.dir
+C:/Users/domin/Desktop/indicator/build/CMakeFiles/AltitudeIndicator.dir
+C:/Users/domin/Desktop/indicator/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/domin/Desktop/indicator/build/CMakeFiles/ZERO_CHECK.dir

@@ -5,6 +5,7 @@
 #include "renderer/sprite.h"
 
 #include <string>
+#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>  // For ortho projection
 
 /*
@@ -63,13 +64,13 @@ int main() {
 
     // Load texture for sprite
     std::string texturePath = TEXTURE_DIR + "sprite.png";
-    Texture spriteTexture(texturePath);
+    // Texture spriteTexture(texturePath);
 
     // Create SpriteRenderer
     SpriteRenderer spriteRenderer(spriteShader);
 
     // Create sprite and set properties
-    Sprite sprite;
+    // Sprite sprite;
 
     // Set up the orthographic projection (2D)
     glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);

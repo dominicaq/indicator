@@ -2,21 +2,87 @@ cmake_minimum_required(VERSION 3.10)
 
 project(AltitudeIndicator)
 
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Include directories for GLAD (OpenGL function loader), GLFW (window management), and GLM (math)
-include_directories(${CMAKE_SOURCE_DIR}/external/glad/include)
-include_directories(${CMAKE_SOURCE_DIR}/external/glfw-3.4/include)
-include_directories(${CMAKE_SOURCE_DIR}/external/glm)
+# Option to enable/disable NDEBUG
+option(ENABLE_NDEBUG "Disable assertions and enable release optimizations" ON)
+
+# Base optimization flags
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native")
+
+# Add -DNDEBUG only if ENABLE_NDEBUG is ON
+if (ENABLE_NDEBUG)
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
+endif()
+
+# Ensure the project is built in Release mode by default
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
+# Ensure using static runtime library for MSVC
+if(WIN32 AND MSVC)
+    # Set the runtime library to static (MultiThreaded)
+    set(CMAKE_C_RUNTIME_LIBRARY "MultiThreaded")
+    set(CMAKE_CXX_RUNTIME_LIBRARY "MultiThreaded")
+
+    # Link against specific libraries to avoid default library conflicts
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:LIBCMT")
+
+    # Disable terminal for Debug builds
+    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
+    endif()
+endif()
+
+# Ensure debug builds do not open a terminal on MinGW
+if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
+endif()
+
+# Include src directory
+include_directories(${CMAKE_SOURCE_DIR}/src)
+
+# Include external directories
+include_directories(
+    ${CMAKE_SOURCE_DIR}/external/glad/include
+    ${CMAKE_SOURCE_DIR}/external/imgui
+    ${CMAKE_SOURCE_DIR}/external/
+)
+
+# IMGUI source files
+set(IMGUI_SRC
+    ${CMAKE_SOURCE_DIR}/external/imgui/imgui.cpp
+    ${CMAKE_SOURCE_DIR}/external/imgui/imgui_draw.cpp
+    ${CMAKE_SOURCE_DIR}/external/imgui/imgui_tables.cpp
+    ${CMAKE_SOURCE_DIR}/external/imgui/imgui_widgets.cpp
+    ${CMAKE_SOURCE_DIR}/external/imgui/backends/imgui_impl_glfw.cpp
+    ${CMAKE_SOURCE_DIR}/external/imgui/backends/imgui_impl_opengl3.cpp
+)
 
 # Find OpenGL
 find_package(OpenGL REQUIRED)
+message(STATUS "OpenGL found.")
 
-# Platform-specific settings
-if (APPLE)
-    set(OpenGL_GL_PREFERENCE LEGACY)
+# GLFW Configuration
+if(WIN32)
+    set(GLFW_ROOT "${CMAKE_SOURCE_DIR}/external/glfw-3.4")
+    include_directories("${GLFW_ROOT}/include")
+    set(GLFW_LIB_DIR "${GLFW_ROOT}/lib-vc2022")
+    set(GLFW_LIB "${GLFW_LIB_DIR}/glfw3_mt.lib")
+
+elseif(UNIX AND NOT APPLE)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(GLFW REQUIRED glfw3)
+    include_directories(${GLFW_INCLUDE_DIRS})
+    link_directories(${GLFW_LIBRARY_DIRS})
+    set(GLFW_LIB ${GLFW_LIBRARIES})
+
 endif()
+
+link_directories("${GLFW_LIB_DIR}")
 
 # Find all .cpp files in src/ and its subdirectories
 file(GLOB_RECURSE SOURCES "${CMAKE_SOURCE_DIR}/src/*.cpp")
@@ -28,16 +94,15 @@ add_definitions(-DASSET_DIR="${ASSET_DIR}")
 # Add GLAD source file
 add_library(glad STATIC ${CMAKE_SOURCE_DIR}/external/glad/src/glad.c)
 
-# Find and link GLFW library
-set(GLFW_LIB_PATH ${CMAKE_SOURCE_DIR}/external/glfw-3.4/bin)
-set(GLFW_LIB_NAME glfw.3)
-find_library(GLFW_LIBRARY NAMES ${GLFW_LIB_NAME} PATHS ${GLFW_LIB_PATH})
-if (NOT GLFW_LIBRARY)
-    message(FATAL_ERROR "Failed to find GLFW library.")
-endif()
-
 # Add executable
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCES} ${SCRIPT_SOURCES} ${IMGUI_SRC})
 
-# Link GLAD, GLFW, and OpenGL
-target_link_libraries(${PROJECT_NAME} glad ${GLFW_LIBRARY} OpenGL::GL)
+# Link against libraries
+target_link_libraries(${PROJECT_NAME} glad OpenGL::GL ${GLFW_LIB})
+
+# Platform-specific compiler options
+if (UNIX)
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wno-deprecated-declarations)
+elseif (WIN32)
+    target_compile_options(${PROJECT_NAME} PRIVATE /wd4996)
+endif()

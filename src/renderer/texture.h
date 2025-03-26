@@ -6,10 +6,10 @@
 class Texture {
 public:
     Texture(const std::string& path);
-    ~Texture();
+    // ~Texture();
 
-    void Bind(unsigned int unit = 0) const;
-    void Unbind() const;
+    // void Bind(unsigned int unit = 0) const;
+    // void Unbind() const;
 
 private:
     unsigned int m_ID;

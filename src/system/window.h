@@ -5,6 +5,10 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#ifdef APIENTRY
+#undef APIENTRY
+#endif
+
 // ImGui headers
 #include "imgui/imgui.h"
 #include "imgui/backends/imgui_impl_glfw.h"

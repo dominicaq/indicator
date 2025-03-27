@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(AltitudeIndicator)
+project(AttitudeIndicator)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)

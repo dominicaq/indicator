@@ -1,4 +1,4 @@
 C:/Users/domin/Desktop/indicator/build/CMakeFiles/glad.dir
-C:/Users/domin/Desktop/indicator/build/CMakeFiles/AltitudeIndicator.dir
+C:/Users/domin/Desktop/indicator/build/CMakeFiles/AttitudeIndicator.dir
 C:/Users/domin/Desktop/indicator/build/CMakeFiles/ALL_BUILD.dir
 C:/Users/domin/Desktop/indicator/build/CMakeFiles/ZERO_CHECK.dir

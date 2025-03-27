@@ -15,13 +15,13 @@
 ########################
 
 //Value Computed by CMake
-AltitudeIndicator_BINARY_DIR:STATIC=C:/Users/domin/Desktop/indicator/build
+AttitudeIndicator_BINARY_DIR:STATIC=C:/Users/domin/Desktop/indicator/build
 
 //Value Computed by CMake
-AltitudeIndicator_IS_TOP_LEVEL:STATIC=ON
+AttitudeIndicator_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
-AltitudeIndicator_SOURCE_DIR:STATIC=C:/Users/domin/Desktop/indicator
+AttitudeIndicator_SOURCE_DIR:STATIC=C:/Users/domin/Desktop/indicator
 
 //Path to a program.
 CMAKE_AR:FILEPATH=C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/bin/Hostx64/x64/lib.exe
@@ -86,7 +86,7 @@ CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=/debug /INCREMENTAL
 CMAKE_FIND_PACKAGE_REDIRECTS_DIR:STATIC=C:/Users/domin/Desktop/indicator/build/CMakeFiles/pkgRedirects
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/AltitudeIndicator
+CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/AttitudeIndicator
 
 //Path to a program.
 CMAKE_LINKER:FILEPATH=C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/bin/Hostx64/x64/link.exe
@@ -121,7 +121,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=AltitudeIndicator
+CMAKE_PROJECT_NAME:STATIC=AttitudeIndicator
 
 //RC compiler
 CMAKE_RC_COMPILER:FILEPATH=rc
@@ -204,7 +204,7 @@ OPENGL_gl_LIBRARY:STRING=opengl32
 OPENGL_glu_LIBRARY:STRING=glu32
 
 //Show console window
-SHOW_CONSOLE:BOOL=ON
+SHOW_CONSOLE:BOOL=OFF
 
 
 ########################

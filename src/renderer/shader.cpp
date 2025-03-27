@@ -3,30 +3,30 @@
 #include <fstream>
 #include <sstream>
 
-Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
+Shader::Shader(const std::string& vertexCode, const std::string& fragmentCode) {
     // Read files
-    std::string vertexCode;
-    std::string fragmentCode;
-    int fileStatus = 0;
+    // std::string vertexCode;
+    // std::string fragmentCode;
+    // int fileStatus = 0;
 
-    fileStatus = loadShaderSource(vertexPath, vertexCode);
-    if (fileStatus != 0) {
-        std::cerr << "Failed to read vertex shader file" << "\n";
-        return;
-    }
+    // fileStatus = loadShaderSource(vertexPath, vertexCode);
+    // if (fileStatus != 0) {
+    //     std::cerr << "Failed to read vertex shader file" << "\n";
+    //     return;
+    // }
 
-    fileStatus = loadShaderSource(fragmentPath, fragmentCode);
-    if (fileStatus != 0) {
-        std::cerr << "Failed to read fragment shader file" << "\n";
-        return;
-    }
+    // fileStatus = loadShaderSource(fragmentPath, fragmentCode);
+    // if (fileStatus != 0) {
+    //     std::cerr << "Failed to read fragment shader file" << "\n";
+    //     return;
+    // }
 
-    // Compile, link, and cleanup
+    // Compile
     int compileStatus = 0;
     unsigned int vertexShader = compileShader(GL_VERTEX_SHADER, vertexCode.c_str(), &compileStatus);
     if (compileStatus != 0) {
         std::cerr << "Vertex shader compilation failed" << "\n";
-        return; // Exit if compilation fails
+        return;
     }
 
     unsigned int fragmentShader = compileShader(GL_FRAGMENT_SHADER, fragmentCode.c_str(), &compileStatus);

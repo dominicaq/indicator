@@ -1,4 +1,4 @@
-### Attitude Indicator
+# Attitude Indicator
 
 #### Building the Project
 

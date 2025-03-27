@@ -10,16 +10,20 @@
 
 class SpriteRenderer {
 public:
-    SpriteRenderer(Shader& shader);
+    SpriteRenderer(Shader& shader, int width, int height);
     ~SpriteRenderer();
 
-    void AddSprite(const Sprite& sprite);
-    void Render();
+    void addSprite(const Sprite& sprite);
+    void render();
 
 private:
-    Shader& m_shader;
+    // Rendering
     std::vector<Sprite> m_sprites;
+    Shader& m_shader;
     unsigned int m_VAO, m_VBO;
+    void initRenderer();
 
-    void InitRenderData();
+    // Viewport
+    glm::mat4 m_projection;
+    int m_viewportWidth, m_viewportHeight;
 };

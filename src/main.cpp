@@ -6,28 +6,77 @@
 
 #include <string>
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>  // For ortho projection
+#include <windows.h>
+#include <iostream>
 
 /*
-* Asset paths
+* Window Properties
 */
-static const std::string TEXTURE_DIR = ASSET_DIR "textures/";
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 400
 
-int main() {
+// Function to render the right panel
+void renderRightPanel() {
+    // Set the panel to take up 1/4th of the screen width
+    ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH / 4.0f, SCREEN_HEIGHT));
+    ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH * 3/4.0f, 0));
+
+    ImGui::Begin("Altitude Indicator Controls", nullptr,
+        ImGuiWindowFlags_NoResize |
+        ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoCollapse);
+
+    // Altitude control
+    static float altitude = 0.0f;
+    ImGui::SliderFloat("Altitude", &altitude, 0.0f, 10000.0f, "%.1f m");
+
+    // Pitch and roll controls
+    static float pitch = 0.0f;
+    static float roll = 0.0f;
+    ImGui::SliderFloat("Pitch", &pitch, -90.0f, 90.0f, "%.1f°");
+    ImGui::SliderFloat("Roll", &roll, -180.0f, 180.0f, "%.1f°");
+
+    // Display settings
+    ImGui::Separator();
+    ImGui::Text("Display Settings");
+
+    static bool showGrid = true;
+    ImGui::Checkbox("Show Grid", &showGrid);
+
+    static bool showCompass = true;
+    ImGui::Checkbox("Show Compass", &showCompass);
+
+    // Information display
+    ImGui::Separator();
+    ImGui::Text("Aircraft Information");
+    ImGui::Text("Current Altitude: %.1f m", altitude);
+    ImGui::Text("Current Pitch: %.1f°", pitch);
+    ImGui::Text("Current Roll: %.1f°", roll);
+
+    ImGui::End();
+}
+
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+#ifdef SHOW_CONSOLE
+    AllocConsole();
+
+    // Redirect stdout and stderr to the console
+    freopen("CONOUT$", "w", stdout);
+    freopen("CONOUT$", "w", stderr);
+#endif
+
     // Initialize window
-    Window window("Altitude Indicator", 800, 600);
+    Window window("Altitude Indicator", SCREEN_WIDTH, SCREEN_HEIGHT);
     if (!window.init()) {
         return -1;
     }
 
-    // Enable depth test (not needed for 2D rendering, but might be useful for future)
-    glEnable(GL_DEPTH_TEST);
+    // Initialize ImGui
+    if (!window.initImGui()) {
+        return -1;
+    }
 
-    // Set up the viewport after window initialization
-    glViewport(0, 0, 800, 600);
-
-    // Vertex and fragment shaders
-    // TODO: Compile and embed the shader code
+    // Vertex and fragment shaders (this would normally be embedded)
     const char* vertexShaderSource = R"(
     #version 330 core
     layout (location = 0) in vec2 aPos;
@@ -61,43 +110,38 @@ int main() {
 
     // Create the sprite shader using the embedded source code
     Shader spriteShader(vertexShaderSource, fragmentShaderSource);
+    SpriteRenderer spriteRenderer(spriteShader, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    // Load texture for sprite
-    std::string texturePath = TEXTURE_DIR + "sprite.png";
-    // Texture spriteTexture(texturePath);
+    // Create sprite and set properties (this would be the scene code)
+    Texture spriteTexture(ASSET_DIR "attitude-indicator.png");
+    Sprite sprite(spriteTexture);
 
-    // Create SpriteRenderer
-    SpriteRenderer spriteRenderer(spriteShader);
-
-    // Create sprite and set properties
-    // Sprite sprite;
-
-    // Set up the orthographic projection (2D)
-    glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
-
-    // Variables for delta time calculation
-    float deltaTime = 0.0f;  // Time between current frame and last frame
+    // Time calculation
+    float deltaTime = 0.0f;
     float lastFrame = 0.0f;
 
     // Render loop
     while (!window.shouldClose()) {
-        // Calculate delta time
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
+        // Listen for the user to close the window (ESC key)
         window.processInput();
 
-        // Clear screen and depth buffer
-        glClear(GL_COLOR_BUFFER_BIT);
+        // Start ImGui frame
+        window.beginImGuiFrame();
 
-        // Use sprite shader and set uniform for projection matrix
-        spriteShader.use();
-        spriteShader.setMat4("projection", projection);
+        // Render the right panel
+        renderRightPanel();
 
         // Render the sprite(s)
-        spriteRenderer.Render();
+        spriteRenderer.render();
 
+        // Render ImGui
+        window.renderImGui();
+
+        // Swap buffers and poll events
         window.swapBuffersAndPollEvents();
     }
 

@@ -6,40 +6,31 @@ project(AltitudeIndicator)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# Option to control console visibility
+option(SHOW_CONSOLE "Show console window" OFF)
+
+# Always set Windows entry point
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS /ENTRY:WinMainCRTStartup")
+
+# Conditionally add SHOW_CONSOLE definition
+if(SHOW_CONSOLE)
+    add_definitions(-DSHOW_CONSOLE)
+else()
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib")
+endif()
+
 # Option to enable/disable NDEBUG
 option(ENABLE_NDEBUG "Disable assertions and enable release optimizations" ON)
-
-# Base optimization flags
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native")
 
 # Add -DNDEBUG only if ENABLE_NDEBUG is ON
 if (ENABLE_NDEBUG)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 endif()
 
-# Ensure the project is built in Release mode by default
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
-endif()
-
 # Ensure using static runtime library for MSVC
 if(WIN32 AND MSVC)
-    # Set the runtime library to static (MultiThreaded)
-    set(CMAKE_C_RUNTIME_LIBRARY "MultiThreaded")
-    set(CMAKE_CXX_RUNTIME_LIBRARY "MultiThreaded")
-
     # Link against specific libraries to avoid default library conflicts
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:LIBCMT")
-
-    # Disable terminal for Debug builds
-    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
-    endif()
-endif()
-
-# Ensure debug builds do not open a terminal on MinGW
-if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
 endif()
 
 # Include src directory
@@ -72,14 +63,6 @@ if(WIN32)
     include_directories("${GLFW_ROOT}/include")
     set(GLFW_LIB_DIR "${GLFW_ROOT}/lib-vc2022")
     set(GLFW_LIB "${GLFW_LIB_DIR}/glfw3_mt.lib")
-
-elseif(UNIX AND NOT APPLE)
-    find_package(PkgConfig REQUIRED)
-    pkg_check_modules(GLFW REQUIRED glfw3)
-    include_directories(${GLFW_INCLUDE_DIRS})
-    link_directories(${GLFW_LIBRARY_DIRS})
-    set(GLFW_LIB ${GLFW_LIBRARIES})
-
 endif()
 
 link_directories("${GLFW_LIB_DIR}")
@@ -101,8 +84,6 @@ add_executable(${PROJECT_NAME} ${SOURCES} ${SCRIPT_SOURCES} ${IMGUI_SRC})
 target_link_libraries(${PROJECT_NAME} glad OpenGL::GL ${GLFW_LIB})
 
 # Platform-specific compiler options
-if (UNIX)
-    target_compile_options(${PROJECT_NAME} PRIVATE -Wno-deprecated-declarations)
-elseif (WIN32)
+if (WIN32)
     target_compile_options(${PROJECT_NAME} PRIVATE /wd4996)
 endif()

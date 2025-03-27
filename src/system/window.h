@@ -5,6 +5,11 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+// ImGui headers
+#include "imgui/imgui.h"
+#include "imgui/backends/imgui_impl_glfw.h"
+#include "imgui/backends/imgui_impl_opengl3.h"
+
 class Window {
 public:
     Window(const char *title, unsigned int width, unsigned int height);
@@ -14,6 +19,7 @@ public:
      * Initialization
      */
     bool init();
+    bool initImGui();
 
     /*
      * Input Handling
@@ -24,6 +30,7 @@ public:
      * Window State
      */
     bool shouldClose() const;
+    GLFWwindow* getGLFWwindow() { return m_window; }
 
     /*
      * Rendering
@@ -36,6 +43,13 @@ public:
     void setTitle(const char *newTitle);
     void resize(unsigned int newWidth, unsigned int newHeight);
     void getSize(int &width, int &height) const;
+
+    /*
+     * ImGui Support
+     */
+    void beginImGuiFrame();
+    void renderImGui();
+    void cleanupImGui();
 
 private:
     // GLFW window object
@@ -50,4 +64,4 @@ private:
     static void framebufferSizeCallback(GLFWwindow *window, int width, int height);
 };
 
-#endif
+#endif // WINDOW_H

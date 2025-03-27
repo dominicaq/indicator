@@ -5,6 +5,7 @@ Window::Window(const char *title, unsigned int width, unsigned int height)
     : title(title), width(width), height(height), m_window(nullptr) {}
 
 Window::~Window() {
+    cleanupImGui();
     glfwTerminate();
 }
 
@@ -13,7 +14,7 @@ Window::~Window() {
  */
 bool Window::init() {
     if (!glfwInit()) {
-        std::cerr << "Failed to initialize GLFW" << std::endl;
+        std::cerr << "Failed to initialize GLFW" << "\n";
         return false;
     }
 
@@ -21,13 +22,9 @@ bool Window::init() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-
     m_window = glfwCreateWindow(width, height, title, NULL, NULL);
     if (!m_window) {
-        std::cerr << "Failed to create GLFW window" << std::endl;
+        std::cerr << "Failed to create GLFW window" << "\n";
         glfwTerminate();
         return false;
     }
@@ -36,11 +33,55 @@ bool Window::init() {
     glfwSetFramebufferSizeCallback(m_window, framebufferSizeCallback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cerr << "Failed to initialize GLAD" << std::endl;
+        std::cerr << "Failed to initialize GLAD" << "\n";
         return false;
     }
 
     return true;
+}
+
+/*
+ * ImGui Initialization and Support
+ */
+bool Window::initImGui() {
+    // Verify window is initialized
+    if (!m_window) {
+        std::cerr << "Cannot initialize ImGui: Window not created" << std::endl;
+        return false;
+    }
+
+    // Initialize ImGui
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    (void)io;
+
+    // Setup Platform/Renderer bindings
+    ImGui_ImplGlfw_InitForOpenGL(m_window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
+
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
+
+    return true;
+}
+
+void Window::beginImGuiFrame() {
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+}
+
+void Window::renderImGui() {
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void Window::cleanupImGui() {
+    // Cleanup ImGui
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
 }
 
 /*

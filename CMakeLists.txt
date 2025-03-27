@@ -6,38 +6,41 @@ project(AttitudeIndicator)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Option to control console visibility
-option(SHOW_CONSOLE "Show console window" OFF)
+# Define asset directory
+set(ASSET_DIR "${CMAKE_SOURCE_DIR}/assets/")
+add_definitions(-DASSET_DIR="${ASSET_DIR}")
 
-# Always set Windows entry point
+# Explicitly set output directories for all configurations
+foreach(CONFIG_TYPE DEBUG RELEASE RELWITHDEBINFO MINSIZEREL)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${CONFIG_TYPE} "${CMAKE_BINARY_DIR}/${CONFIG_TYPE}")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${CONFIG_TYPE} "${CMAKE_BINARY_DIR}/${CONFIG_TYPE}")
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${CONFIG_TYPE} "${CMAKE_BINARY_DIR}/${CONFIG_TYPE}")
+endforeach()
+
+# Compiler flags
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
+
+# Windows-specific linker settings
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS /ENTRY:WinMainCRTStartup")
 
-# Conditionally add SHOW_CONSOLE definition
+# Automatically disable console in Release mode
+option(SHOW_CONSOLE "Show console window" OFF)
+
 if(SHOW_CONSOLE)
     add_definitions(-DSHOW_CONSOLE)
 else()
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib")
 endif()
 
-# Option to enable/disable NDEBUG
-option(ENABLE_NDEBUG "Disable assertions and enable release optimizations" ON)
-
-# Add -DNDEBUG only if ENABLE_NDEBUG is ON
-if (ENABLE_NDEBUG)
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
-endif()
-
 # Ensure using static runtime library for MSVC
 if(WIN32 AND MSVC)
-    # Link against specific libraries to avoid default library conflicts
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:LIBCMT")
 endif()
 
-# Include src directory
-include_directories(${CMAKE_SOURCE_DIR}/src)
-
-# Include external directories
+# Include directories
 include_directories(
+    ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/external/glad/include
     ${CMAKE_SOURCE_DIR}/external/imgui
     ${CMAKE_SOURCE_DIR}/external/
@@ -70,15 +73,11 @@ link_directories("${GLFW_LIB_DIR}")
 # Find all .cpp files in src/ and its subdirectories
 file(GLOB_RECURSE SOURCES "${CMAKE_SOURCE_DIR}/src/*.cpp")
 
-# Define asset directory as an absolute path
-set(ASSET_DIR "${CMAKE_SOURCE_DIR}/assets/")
-add_definitions(-DASSET_DIR="${ASSET_DIR}")
-
 # Add GLAD source file
 add_library(glad STATIC ${CMAKE_SOURCE_DIR}/external/glad/src/glad.c)
 
 # Add executable
-add_executable(${PROJECT_NAME} ${SOURCES} ${SCRIPT_SOURCES} ${IMGUI_SRC})
+add_executable(${PROJECT_NAME} ${SOURCES} ${IMGUI_SRC})
 
 # Link against libraries
 target_link_libraries(${PROJECT_NAME} glad OpenGL::GL ${GLFW_LIB})
@@ -87,3 +86,19 @@ target_link_libraries(${PROJECT_NAME} glad OpenGL::GL ${GLFW_LIB})
 if (WIN32)
     target_compile_options(${PROJECT_NAME} PRIVATE /wd4996)
 endif()
+
+# Replace the existing ASSET_DIR definition with:
+set(ORIGINAL_ASSET_DIR "${CMAKE_SOURCE_DIR}/assets/")
+set(ASSET_DIR "$<TARGET_FILE_DIR:${PROJECT_NAME}>/assets/")
+add_definitions(-DASSET_DIR="${ASSET_DIR}")
+
+# Modify the custom command to ensure assets are copied first
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    # Ensure the destination assets directory exists
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${ASSET_DIR}"
+
+    # Copy the original assets to the build directory
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${ORIGINAL_ASSET_DIR}" "${ASSET_DIR}"
+
+    COMMENT "Copying assets to the output directory"
+)

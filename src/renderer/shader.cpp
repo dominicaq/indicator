@@ -3,76 +3,80 @@
 #include <fstream>
 #include <sstream>
 
-Shader::Shader(const std::string& vertexCode, const std::string& fragmentCode) {
-    // Read files
-    // std::string vertexCode;
-    // std::string fragmentCode;
-    // int fileStatus = 0;
+Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
+    // Read shader sources
+    std::string vertexCode = readShaderFile(vertexPath);
+    std::string fragmentCode = readShaderFile(fragmentPath);
 
-    // fileStatus = loadShaderSource(vertexPath, vertexCode);
-    // if (fileStatus != 0) {
-    //     std::cerr << "Failed to read vertex shader file" << "\n";
-    //     return;
-    // }
-
-    // fileStatus = loadShaderSource(fragmentPath, fragmentCode);
-    // if (fileStatus != 0) {
-    //     std::cerr << "Failed to read fragment shader file" << "\n";
-    //     return;
-    // }
-
-    // Compile
-    int compileStatus = 0;
-    unsigned int vertexShader = compileShader(GL_VERTEX_SHADER, vertexCode.c_str(), &compileStatus);
-    if (compileStatus != 0) {
-        std::cerr << "Vertex shader compilation failed" << "\n";
-        return;
+    if (vertexCode.empty() || fragmentCode.empty()) {
+        throw std::runtime_error("Failed to read shader files");
     }
 
-    unsigned int fragmentShader = compileShader(GL_FRAGMENT_SHADER, fragmentCode.c_str(), &compileStatus);
-    if (compileStatus != 0) {
-        std::cerr << "Fragment shader compilation failed" << "\n";
-        glDeleteShader(vertexShader); // Clean up already compiled shaders
-        return;
-    }
+    // Compile shaders
+    unsigned int vertexShader = createShader(GL_VERTEX_SHADER, vertexCode.c_str());
+    unsigned int fragmentShader = createShader(GL_FRAGMENT_SHADER, fragmentCode.c_str());
 
-    int linkStatus = 0;
-    linkProgram(vertexShader, fragmentShader, &linkStatus);
-    if (linkStatus != 0) {
-        std::cerr << "Program linking failed" << "\n";
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
-        return;
+    // Link program
+    m_ID = glCreateProgram();
+    glAttachShader(m_ID, vertexShader);
+    glAttachShader(m_ID, fragmentShader);
+    glLinkProgram(m_ID);
+
+    // Check linking errors
+    int success;
+    glGetProgramiv(m_ID, GL_LINK_STATUS, &success);
+    if (!success) {
+        char infoLog[512];
+        glGetProgramInfoLog(m_ID, sizeof(infoLog), nullptr, infoLog);
+        std::cerr << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << "\n";
+        throw std::runtime_error("Shader program linking failed");
     }
 
     // Clean up shaders
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
+}
 
-    // Check for OpenGL errors after linking
-    GLenum error = glGetError();
-    if (error != GL_NO_ERROR) {
-        std::cerr << "OpenGL Error: " << error << "\n";
+std::string Shader::readShaderFile(const std::string& path) {
+    std::ifstream file(path);
+    if (!file.is_open()) {
+        std::cerr << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ\n";
+        std::cerr << "PATH: " << path << "\n";
+        return "";
     }
+
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    return buffer.str();
+}
+
+unsigned int Shader::createShader(GLenum type, const char* source) {
+    unsigned int shader = glCreateShader(type);
+    glShaderSource(shader, 1, &source, nullptr);
+    glCompileShader(shader);
+
+    // Check compilation errors
+    int success;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        char infoLog[512];
+        glGetShaderInfoLog(shader, sizeof(infoLog), nullptr, infoLog);
+        std::cerr << "ERROR::SHADER::COMPILATION_FAILED\n" << infoLog << "\n";
+        glDeleteShader(shader);
+        throw std::runtime_error("Shader compilation failed");
+    }
+
+    return shader;
 }
 
 Shader::~Shader() {
     if (glIsProgram(m_ID)) {
         glDeleteProgram(m_ID);
-    } else {
-        std::cerr << "ERROR::SHADER::PROGRAM_NOT_DELETED: Program ID is not valid" << "\n";
     }
 }
 
-/*
-* Shader management
-*/
 void Shader::use() const {
-    if (glIsProgram(m_ID)) {
-        glUseProgram(m_ID);
-    } else {
-        // std::cerr << "ERROR::SHADER::USE_FAILED: Program ID is not valid" << "\n";
-    }
+    glUseProgram(m_ID);
 }
 
 /*

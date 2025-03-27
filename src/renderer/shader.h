@@ -8,7 +8,7 @@
 
 class Shader {
 public:
-    Shader(const std::string& vertexCode, const std::string& fragmentCode);
+    Shader(const std::string& vertexPath, const std::string& fragmentPath);
     ~Shader();
 
     void use() const;
@@ -21,6 +21,11 @@ public:
 private:
     unsigned int m_ID;
 
+    /*
+    * Shader creation helpers
+    */
+    unsigned int createShader(GLenum type, const char* source);
+    std::string readShaderFile(const std::string& path);
     unsigned int compileShader(unsigned int type, const char* source, int *status);
     void linkProgram(unsigned int vertexShader, unsigned int fragmentShader, int *status);
     int loadShaderSource(const std::string& path, std::string& sourceCode);

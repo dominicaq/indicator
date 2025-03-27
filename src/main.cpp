@@ -15,13 +15,12 @@
 */
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 400
-
 #define INDICATOR_PX_SIZE 350
 
-// Function to render the right panel
-void renderRightPanel(float& pitch, float& roll, bool& showStationary) {
-    ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH / 4.0f, SCREEN_HEIGHT));
-    ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH * 3/4.0f, 0));
+// Function to setup the ImGUI right panel
+void setupRightPanel(float& pitch, float& roll, bool& showStationary) {
+    ImGui::SetNextWindowSize(ImVec2(SCREEN_WIDTH * 0.25f, SCREEN_HEIGHT));
+    ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH * 0.75f, 0));
 
     ImGui::Begin("Attitude Indicator Controls", nullptr,
         ImGuiWindowFlags_NoResize |
@@ -57,7 +56,7 @@ void renderRightPanel(float& pitch, float& roll, bool& showStationary) {
     ImGui::End();
 }
 
-std::vector<Sprite*> initeAttitudeSprites(SpriteRenderer& spriteRenderer, float availableWidth, float availableHeight) {
+std::vector<Sprite*> initAttitudeSprites(SpriteRenderer& spriteRenderer, float availableWidth, float availableHeight) {
     // Calculate center position based on available space
     glm::vec2 pxScale = glm::vec2(INDICATOR_PX_SIZE, INDICATOR_PX_SIZE);
     glm::vec2 centerPos = glm::vec2(
@@ -107,44 +106,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
         return -1;
     }
 
-    // Vertex and fragment shaders (this would normally be embedded)
-    const char* vertexShaderSource = R"(
-    #version 330 core
-    layout (location = 0) in vec2 aPos;
-    layout (location = 1) in vec2 aTexCoord;
-
-    out vec2 TexCoord;
-
-    uniform mat4 model;
-    uniform mat4 projection;
-
-    void main()
-    {
-        gl_Position = projection * model * vec4(aPos, 0.0, 1.0);
-        TexCoord = aTexCoord;
-    }
-    )";
-
-    const char* fragmentShaderSource = R"(
-    #version 330 core
-    out vec4 FragColor;
-
-    in vec2 TexCoord;
-
-    uniform sampler2D spriteTexture;
-
-    void main()
-    {
-        FragColor = texture(spriteTexture, TexCoord);
-    }
-    )";
-
-    // Create the sprite shader using the embedded source code
-    Shader spriteShader(vertexShaderSource, fragmentShaderSource);
+    // Setup the renderer
+    Shader spriteShader(ASSET_DIR "shaders/sprite.vs", ASSET_DIR "shaders/sprite.fs");
     SpriteRenderer spriteRenderer(spriteShader, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     // Initialize sprites and get pointers to them
-    std::vector<Sprite*> attitudeSprites = initeAttitudeSprites(spriteRenderer, SCREEN_WIDTH * 0.75f, SCREEN_HEIGHT);
+    std::vector<Sprite*> attitudeSprites = initAttitudeSprites(spriteRenderer, SCREEN_WIDTH * 0.75f, SCREEN_HEIGHT);
+    Sprite* innerSprite = attitudeSprites[0];
+    Sprite* outerSprite = attitudeSprites[1];
+    Sprite* centerSprite = attitudeSprites[2];
+    Sprite* topSprite = attitudeSprites[3];
 
     // Panel variables
     float pitch = 0.0f, roll = 0.0f;
@@ -159,13 +130,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
         window.processInput();
         window.beginImGuiFrame();
 
-        renderRightPanel(pitch, roll, showStationary);
-
-        // Access sprites from the vector
-        Sprite* innerSprite = attitudeSprites[0];
-        Sprite* outerSprite = attitudeSprites[1];
-        Sprite* centerSprite = attitudeSprites[2];
-        Sprite* topSprite = attitudeSprites[3];
+        setupRightPanel(pitch, roll, showStationary);
 
         // Set indicator properties
         topSprite->renderSprite = showStationary;
@@ -185,7 +150,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
         innerSprite->transform.rotation = roll;
         outerSprite->transform.rotation = roll;
 
-        // Render the sprites
+        // Render the sprites and panel
         spriteRenderer.render();
         window.renderImGui();
 

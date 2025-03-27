@@ -22,7 +22,7 @@ Texture::Texture(const std::string& path) {
         glTexImage2D(GL_TEXTURE_2D, 0, format, m_Width, m_Height, 0, format, GL_UNSIGNED_BYTE, data);
         stbi_image_free(data);
     } else {
-        std::cerr << "Failed to load texture: " << path << std::endl;
+        std::cerr << "ERROR::TEXTURE::Failed to load texture\n" << path << "\n";
     }
 }
 

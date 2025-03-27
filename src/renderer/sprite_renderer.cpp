@@ -31,12 +31,14 @@ void SpriteRenderer::render() {
 
         glm::mat4 model = glm::mat4(1.0f);
 
-        // First, translate the sprite to the origin (its center), rotate, then translate back to the original position
-        model = glm::translate(model, glm::vec3(sprite->transform.position, 0.0f));  // Translate to position (top-left)
-        model = glm::translate(model, glm::vec3(sprite->transform.scale.x / 2.0f, sprite->transform.scale.y / 2.0f, 0.0f)); // Translate to center
-        model = glm::rotate(model, glm::radians(sprite->transform.rotation), glm::vec3(0.0f, 0.0f, 1.0f)); // Apply rotation around the center
-        model = glm::translate(model, glm::vec3(-sprite->transform.scale.x / 2.0f, -sprite->transform.scale.y / 2.0f, 0.0f)); // Translate back to the original position
-        model = glm::scale(model, glm::vec3(sprite->transform.scale, 1.0f)); // Apply scaling
+        // First, translate the sprite to the origin (to center rotation)
+        model = glm::translate(model, glm::vec3(sprite->transform.position, 0.0f));
+        model = glm::translate(model, glm::vec3(sprite->transform.scale.x / 2.0f, sprite->transform.scale.y / 2.0f, 0.0f));
+
+        // Apply transform properties
+        model = glm::rotate(model, glm::radians(sprite->transform.rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-sprite->transform.scale.x / 2.0f, -sprite->transform.scale.y / 2.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(sprite->transform.scale, 1.0f));
 
         m_shader.setMat4("projection", m_projection);
         m_shader.setMat4("model", model);

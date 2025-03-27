@@ -13,12 +13,12 @@ public:
     SpriteRenderer(Shader& shader, int width, int height);
     ~SpriteRenderer();
 
-    void addSprite(const Sprite& sprite);
+    void addSprite(Sprite* sprite);
     void render();
 
 private:
     // Rendering
-    std::vector<Sprite> m_sprites;
+    std::vector<Sprite*> m_sprites;
     Shader& m_shader;
     unsigned int m_VAO, m_VBO;
     void initRenderer();

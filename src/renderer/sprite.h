@@ -18,8 +18,10 @@ struct Transform {
 
 struct Sprite {
     Transform transform;
-    Texture texture;
+    Texture* texture;
+    bool renderSprite = true;
 
-    Sprite(const Texture& tex, const Transform& trans = Transform())
+    // Constructor now takes a pointer to avoid ownership issues
+    Sprite(Texture* tex, const Transform& trans = Transform())
         : texture(tex), transform(trans) {}
 };
